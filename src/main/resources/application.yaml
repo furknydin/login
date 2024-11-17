@@ -20,11 +20,6 @@ spring:
   liquibase:
     change-log: classpath:/db/migrations/changelog.xml
 
-  security:
-    user:
-      name: furkan
-      password: aydin
-
 
 
 
