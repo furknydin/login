@@ -40,6 +40,8 @@ public class RestHeaderAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+
         String username = getUsername(request);
         String password = getPassword(request);
 
@@ -57,13 +59,13 @@ public class RestHeaderAuthFilter extends OncePerRequestFilter {
                 Authentication authentication = authenticationManager.authenticate(authenticationToken);
                 request.setAttribute("authenticatedUser", authentication);
                 logRequest(requestWrapper);
-                filterChain.doFilter(request, response);
+                filterChain.doFilter(requestWrapper, responseWrapper);
                 logResponse(responseWrapper);
             } catch (AuthenticationException ex) {
                 authenticationFailureHandler.onAuthenticationFailure(request, response, ex);
             }
         } else {
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(requestWrapper, responseWrapper);
         }
     }
 
